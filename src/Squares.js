@@ -1,25 +1,20 @@
 import React from 'react';
 import './App.css';
 
-class Squares extends React.Component{
-    constructor(props){
-        super()
-    }
+function Squares({ index, isDisabled, isHighlighted, onSquareClick, renderToken, value }) {
+  const label = value ? `Square ${index + 1}, occupied` : `Square ${index + 1}, empty`;
 
-    handleClick = (index) => {
-        this.props.squareLocation(this.props.index)
-        this.props.squareLocation(this.props.counter)
-        this.props.winningCombos(this.props.value)
-    }
-
-    render(){
-        return(
-            <div>
-            <button className = "Squares" onClick = {this.handleClick}> {this.props.value} </button>
-            </div>
-        )
-    }
+  return (
+    <button
+      type="button"
+      className={`square ${isHighlighted ? 'square--winning' : ''}`}
+      onClick={() => onSquareClick(index)}
+      disabled={isDisabled}
+      aria-label={label}
+    >
+      {renderToken(value)}
+    </button>
+  );
 }
-
 
 export default Squares;
