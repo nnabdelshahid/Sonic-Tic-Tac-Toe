@@ -10,12 +10,16 @@ const PLAYERS = {
     name: 'Sonic',
     image: sonic,
     alt: 'Sonic token',
+    resultTitle: 'Sonic wins!',
+    resultText: 'Sonic blasts through the finish line and owns this round.',
   },
   eggman: {
     id: 'eggman',
     name: 'Dr. Eggman',
     image: eggman,
     alt: 'Dr. Eggman token',
+    resultTitle: 'Eggman wins!',
+    resultText: 'Dr. Eggman powers up the victory machine.',
   },
 };
 
@@ -141,6 +145,29 @@ class Board extends React.Component {
     return `${PLAYERS[currentPlayer].name} is up.`;
   };
 
+  getResultDetails = () => {
+    const { isDraw, winner } = this.state;
+
+    if (winner) {
+      return {
+        tone: winner,
+        title: PLAYERS[winner].resultTitle,
+        text: PLAYERS[winner].resultText,
+        playerId: winner,
+      };
+    }
+
+    if (isDraw) {
+      return {
+        tone: 'draw',
+        title: 'Draw round',
+        text: 'The rivalry stalls out. Start a new round for the rematch.',
+      };
+    }
+
+    return null;
+  };
+
   renderToken = (playerId) => {
     if (!playerId) {
       return null;
@@ -148,6 +175,37 @@ class Board extends React.Component {
 
     const player = PLAYERS[playerId];
     return <img src={player.image} alt={player.alt} />;
+  };
+
+  renderResultAnimation = () => {
+    const details = this.getResultDetails();
+
+    if (!details) {
+      return null;
+    }
+
+    return (
+      <section
+        className={`result-animation result-animation--${details.tone}`}
+        aria-live="polite"
+        aria-label={details.title}
+      >
+        <div className="result-track" aria-hidden="true">
+          <span className="result-ring result-ring--one" />
+          <span className="result-ring result-ring--two" />
+          <span className="result-streak result-streak--one" />
+          <span className="result-streak result-streak--two" />
+          <span className="result-streak result-streak--three" />
+        </div>
+        <div className="result-token" aria-hidden="true">
+          {details.playerId ? this.renderToken(details.playerId) : <span>VS</span>}
+        </div>
+        <div className="result-copy">
+          <h2>{details.title}</h2>
+          <p>{details.text}</p>
+        </div>
+      </section>
+    );
   };
 
   render() {
@@ -200,6 +258,8 @@ class Board extends React.Component {
               />
             ))}
           </div>
+
+          {this.renderResultAnimation()}
 
           <div className="controls" aria-label="Game controls">
             <button type="button" className="primary-button" onClick={this.resetRound}>

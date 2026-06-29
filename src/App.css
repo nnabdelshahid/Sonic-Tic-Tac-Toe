@@ -176,6 +176,167 @@ h1 {
   box-shadow: 0 0 0 4px rgba(247, 200, 70, 0.32);
 }
 
+.result-animation {
+  position: relative;
+  min-height: 156px;
+  display: grid;
+  grid-template-columns: 140px minmax(0, 1fr);
+  gap: 18px;
+  align-items: center;
+  margin: 20px auto 0;
+  overflow: hidden;
+  border: 1px solid rgba(16, 25, 35, 0.14);
+  border-radius: 8px;
+  padding: 18px;
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.92), rgba(255, 255, 255, 0.72)),
+    #ffffff;
+  animation: result-pop 420ms ease-out both;
+}
+
+.result-animation--sonic {
+  border-color: rgba(23, 105, 209, 0.36);
+  background:
+    radial-gradient(circle at 18% 46%, rgba(247, 200, 70, 0.34), transparent 9rem),
+    linear-gradient(135deg, rgba(231, 243, 255, 0.96), rgba(255, 255, 255, 0.82));
+}
+
+.result-animation--eggman {
+  border-color: rgba(216, 59, 45, 0.38);
+  background:
+    radial-gradient(circle at 18% 46%, rgba(216, 59, 45, 0.2), transparent 9rem),
+    linear-gradient(135deg, rgba(255, 238, 234, 0.96), rgba(255, 255, 255, 0.82));
+}
+
+.result-animation--draw {
+  border-color: rgba(98, 107, 120, 0.34);
+  background:
+    radial-gradient(circle at 18% 46%, rgba(98, 107, 120, 0.2), transparent 9rem),
+    linear-gradient(135deg, rgba(240, 244, 248, 0.96), rgba(255, 255, 255, 0.82));
+}
+
+.result-track,
+.result-token {
+  grid-column: 1;
+  grid-row: 1;
+}
+
+.result-track {
+  position: relative;
+  width: 126px;
+  height: 126px;
+}
+
+.result-ring,
+.result-streak {
+  position: absolute;
+  display: block;
+  pointer-events: none;
+}
+
+.result-ring {
+  border: 5px solid var(--gold);
+  border-radius: 999px;
+  opacity: 0.88;
+  animation: ring-pulse 1.35s ease-in-out infinite;
+}
+
+.result-ring--one {
+  width: 88px;
+  height: 88px;
+  left: 19px;
+  top: 19px;
+}
+
+.result-ring--two {
+  width: 56px;
+  height: 56px;
+  left: 35px;
+  top: 35px;
+  animation-delay: 180ms;
+}
+
+.result-streak {
+  right: 4px;
+  width: 56px;
+  height: 7px;
+  border-radius: 999px;
+  background: currentColor;
+  opacity: 0.8;
+  animation: streak-slide 820ms ease-in-out infinite;
+}
+
+.result-animation--sonic .result-streak {
+  color: var(--blue);
+}
+
+.result-animation--eggman .result-streak {
+  color: var(--red);
+}
+
+.result-animation--draw .result-streak {
+  color: #626b78;
+}
+
+.result-streak--one {
+  top: 34px;
+}
+
+.result-streak--two {
+  top: 59px;
+  width: 76px;
+  animation-delay: 120ms;
+}
+
+.result-streak--three {
+  top: 84px;
+  width: 44px;
+  animation-delay: 240ms;
+}
+
+.result-token {
+  position: relative;
+  z-index: 1;
+  width: 126px;
+  height: 126px;
+  display: grid;
+  place-items: center;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.72);
+  box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.8);
+  animation: winner-float 1.15s ease-in-out infinite;
+}
+
+.result-token img {
+  width: 82%;
+  height: 82%;
+  object-fit: contain;
+}
+
+.result-token span {
+  color: #626b78;
+  font-size: 30px;
+  font-weight: 900;
+}
+
+.result-copy {
+  position: relative;
+  z-index: 1;
+}
+
+.result-copy h2 {
+  margin: 0;
+  font-size: 30px;
+  line-height: 1.05;
+}
+
+.result-copy p {
+  margin: 8px 0 0;
+  color: #526273;
+  font-weight: 720;
+  line-height: 1.4;
+}
+
 .controls {
   display: flex;
   align-items: center;
@@ -234,6 +395,23 @@ h1 {
     grid-template-columns: 1fr;
   }
 
+  .result-animation {
+    min-height: 0;
+    grid-template-columns: 1fr;
+    justify-items: center;
+    text-align: center;
+  }
+
+  .result-track,
+  .result-token {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .result-copy h2 {
+    font-size: 26px;
+  }
+
   .controls {
     display: grid;
   }
@@ -246,5 +424,57 @@ h1 {
   .games-played {
     margin-left: 0;
     text-align: center;
+  }
+}
+
+@keyframes result-pop {
+  from {
+    opacity: 0;
+    transform: translateY(10px) scale(0.97);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes ring-pulse {
+  0%,
+  100% {
+    transform: scale(0.88);
+    opacity: 0.68;
+  }
+
+  50% {
+    transform: scale(1.06);
+    opacity: 1;
+  }
+}
+
+@keyframes streak-slide {
+  0% {
+    transform: translateX(-12px);
+    opacity: 0;
+  }
+
+  38% {
+    opacity: 0.82;
+  }
+
+  100% {
+    transform: translateX(22px);
+    opacity: 0;
+  }
+}
+
+@keyframes winner-float {
+  0%,
+  100% {
+    transform: translateY(0) rotate(-2deg);
+  }
+
+  50% {
+    transform: translateY(-8px) rotate(2deg);
   }
 }
