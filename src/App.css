@@ -178,163 +178,421 @@ h1 {
 
 .result-animation {
   position: relative;
-  min-height: 156px;
+  isolation: isolate;
+  min-height: 254px;
   display: grid;
-  grid-template-columns: 140px minmax(0, 1fr);
-  gap: 18px;
-  align-items: center;
-  margin: 20px auto 0;
+  grid-template-columns: minmax(270px, 1.15fr) minmax(0, 0.85fr);
+  align-items: stretch;
+  margin: 22px auto 0;
   overflow: hidden;
-  border: 1px solid rgba(16, 25, 35, 0.14);
+  border: 1px solid rgba(16, 25, 35, 0.18);
   border-radius: 8px;
-  padding: 18px;
-  background:
-    linear-gradient(135deg, rgba(255, 255, 255, 0.92), rgba(255, 255, 255, 0.72)),
-    #ffffff;
+  background: #ffffff;
+  box-shadow: 0 18px 46px rgba(16, 25, 35, 0.18);
   animation: result-pop 420ms ease-out both;
+}
+
+.result-animation::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(115deg, transparent 0 38%, rgba(255, 255, 255, 0.72) 48%, transparent 58% 100%);
+  transform: translateX(-80%);
+  animation: panel-shine 2.2s ease-in-out 260ms infinite;
 }
 
 .result-animation--sonic {
   border-color: rgba(23, 105, 209, 0.36);
-  background:
-    radial-gradient(circle at 18% 46%, rgba(247, 200, 70, 0.34), transparent 9rem),
-    linear-gradient(135deg, rgba(231, 243, 255, 0.96), rgba(255, 255, 255, 0.82));
 }
 
 .result-animation--eggman {
-  border-color: rgba(216, 59, 45, 0.38);
-  background:
-    radial-gradient(circle at 18% 46%, rgba(216, 59, 45, 0.2), transparent 9rem),
-    linear-gradient(135deg, rgba(255, 238, 234, 0.96), rgba(255, 255, 255, 0.82));
+  border-color: rgba(216, 59, 45, 0.4);
 }
 
 .result-animation--draw {
-  border-color: rgba(98, 107, 120, 0.34);
-  background:
-    radial-gradient(circle at 18% 46%, rgba(98, 107, 120, 0.2), transparent 9rem),
-    linear-gradient(135deg, rgba(240, 244, 248, 0.96), rgba(255, 255, 255, 0.82));
+  border-color: rgba(98, 107, 120, 0.36);
 }
 
-.result-track,
-.result-token {
-  grid-column: 1;
-  grid-row: 1;
-}
-
-.result-track {
+.result-stage {
   position: relative;
-  width: 126px;
-  height: 126px;
+  min-height: 254px;
+  overflow: hidden;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.2), transparent 46%),
+    linear-gradient(135deg, #0d4ea6, #2aa8ff 52%, #f7c846 53%, #f7c846 58%, #207a40 59%);
+}
+
+.result-animation--eggman .result-stage {
+  background:
+    radial-gradient(circle at 72% 28%, rgba(247, 200, 70, 0.28), transparent 6rem),
+    linear-gradient(135deg, #3c1216, #a7222f 56%, #2d313b 57%);
+}
+
+.result-animation--draw .result-stage {
+  background:
+    radial-gradient(circle at 48% 34%, rgba(247, 200, 70, 0.24), transparent 8rem),
+    linear-gradient(135deg, #384250, #7d8998 56%, #323a44 57%);
+}
+
+.result-sky,
+.speed-lane,
+.winner-avatar,
+.opponent-avatar,
+.draw-avatars,
+.finish-line,
+.runner-shadow {
+  position: absolute;
+}
+
+.result-sky {
+  inset: 0;
 }
 
 .result-ring,
-.result-streak {
+.result-spark,
+.speed-line {
   position: absolute;
   display: block;
   pointer-events: none;
 }
 
 .result-ring {
-  border: 5px solid var(--gold);
+  width: 34px;
+  height: 34px;
+  border: 6px solid var(--gold);
   border-radius: 999px;
-  opacity: 0.88;
-  animation: ring-pulse 1.35s ease-in-out infinite;
+  box-shadow: 0 0 18px rgba(247, 200, 70, 0.46);
+  animation: ring-race 1.75s linear infinite;
 }
 
-.result-ring--one {
-  width: 88px;
-  height: 88px;
-  left: 19px;
-  top: 19px;
+.result-ring--1 {
+  left: 9%;
+  top: 17%;
 }
 
-.result-ring--two {
-  width: 56px;
-  height: 56px;
-  left: 35px;
-  top: 35px;
-  animation-delay: 180ms;
+.result-ring--2 {
+  left: 31%;
+  top: 27%;
+  width: 25px;
+  height: 25px;
+  animation-delay: -520ms;
 }
 
-.result-streak {
-  right: 4px;
-  width: 56px;
-  height: 7px;
+.result-ring--3 {
+  left: 57%;
+  top: 12%;
+  animation-delay: -940ms;
+}
+
+.result-ring--4 {
+  left: 72%;
+  top: 42%;
+  width: 27px;
+  height: 27px;
+  animation-delay: -1280ms;
+}
+
+.result-ring--5 {
+  left: 15%;
+  top: 58%;
+  width: 24px;
+  height: 24px;
+  animation-delay: -220ms;
+}
+
+.result-ring--6 {
+  left: 48%;
+  top: 69%;
+  animation-delay: -760ms;
+}
+
+.result-ring--7 {
+  left: 83%;
+  top: 19%;
+  width: 22px;
+  height: 22px;
+  animation-delay: -1120ms;
+}
+
+.result-animation--eggman .result-ring {
+  border-color: #ffdf65;
+  box-shadow: 0 0 22px rgba(216, 59, 45, 0.6);
+}
+
+.result-spark {
+  width: 10px;
+  height: 22px;
   border-radius: 999px;
-  background: currentColor;
-  opacity: 0.8;
-  animation: streak-slide 820ms ease-in-out infinite;
+  background: #ffffff;
+  box-shadow: 0 0 12px rgba(255, 255, 255, 0.8);
+  animation: spark-burst 1.2s ease-in-out infinite;
 }
 
-.result-animation--sonic .result-streak {
-  color: var(--blue);
+.result-spark--1 {
+  left: 12%;
+  top: 28%;
 }
 
-.result-animation--eggman .result-streak {
-  color: var(--red);
+.result-spark--2 {
+  left: 20%;
+  top: 71%;
+  animation-delay: 80ms;
 }
 
-.result-animation--draw .result-streak {
-  color: #626b78;
+.result-spark--3 {
+  left: 28%;
+  top: 18%;
+  animation-delay: 160ms;
 }
 
-.result-streak--one {
-  top: 34px;
-}
-
-.result-streak--two {
-  top: 59px;
-  width: 76px;
-  animation-delay: 120ms;
-}
-
-.result-streak--three {
-  top: 84px;
-  width: 44px;
+.result-spark--4 {
+  left: 38%;
+  top: 62%;
   animation-delay: 240ms;
 }
 
-.result-token {
-  position: relative;
-  z-index: 1;
-  width: 126px;
-  height: 126px;
+.result-spark--5 {
+  left: 48%;
+  top: 34%;
+  animation-delay: 320ms;
+}
+
+.result-spark--6 {
+  left: 58%;
+  top: 74%;
+  animation-delay: 400ms;
+}
+
+.result-spark--7 {
+  left: 66%;
+  top: 21%;
+  animation-delay: 480ms;
+}
+
+.result-spark--8 {
+  left: 76%;
+  top: 55%;
+  animation-delay: 560ms;
+}
+
+.result-spark--9 {
+  left: 84%;
+  top: 33%;
+  animation-delay: 640ms;
+}
+
+.result-spark--10 {
+  left: 90%;
+  top: 72%;
+  animation-delay: 720ms;
+}
+
+.result-spark--11 {
+  left: 6%;
+  top: 51%;
+  animation-delay: 800ms;
+}
+
+.result-spark--12 {
+  left: 54%;
+  top: 8%;
+  animation-delay: 880ms;
+}
+
+.speed-lane {
+  left: 0;
+  right: 0;
+  bottom: 28px;
+  height: 76px;
+  background:
+    repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.28) 0 18px, transparent 18px 34px),
+    linear-gradient(180deg, rgba(16, 25, 35, 0.2), rgba(16, 25, 35, 0.44));
+  transform: skewY(-5deg);
+}
+
+.speed-line {
+  left: -28%;
+  width: 120px;
+  height: 6px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.88);
+  animation: speed-sweep 760ms linear infinite;
+}
+
+.speed-line--1 {
+  top: 11px;
+}
+
+.speed-line--2 {
+  top: 23px;
+  width: 86px;
+  animation-delay: 110ms;
+}
+
+.speed-line--3 {
+  top: 35px;
+  width: 146px;
+  animation-delay: 220ms;
+}
+
+.speed-line--4 {
+  top: 47px;
+  width: 96px;
+  animation-delay: 330ms;
+}
+
+.speed-line--5 {
+  top: 59px;
+  animation-delay: 440ms;
+}
+
+.speed-line--6 {
+  top: 69px;
+  width: 70px;
+  animation-delay: 550ms;
+}
+
+.finish-line {
+  right: 28px;
+  bottom: 34px;
+  width: 10px;
+  height: 118px;
+  border-radius: 999px;
+  background: repeating-linear-gradient(180deg, #ffffff 0 12px, #101923 12px 24px);
+  box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.2);
+}
+
+.winner-avatar {
+  left: 48%;
+  bottom: 40px;
+  z-index: 3;
+  width: 128px;
+  height: 128px;
   display: grid;
   place-items: center;
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.72);
-  box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.8);
-  animation: winner-float 1.15s ease-in-out infinite;
+  background: rgba(255, 255, 255, 0.82);
+  box-shadow:
+    0 18px 34px rgba(16, 25, 35, 0.28),
+    inset 0 0 0 3px rgba(255, 255, 255, 0.92);
 }
 
-.result-token img {
+.winner-avatar img,
+.opponent-avatar img,
+.draw-avatar img {
   width: 82%;
   height: 82%;
   object-fit: contain;
 }
 
-.result-token span {
-  color: #626b78;
-  font-size: 30px;
-  font-weight: 900;
+.winner-avatar--sonic {
+  animation: sonic-victory-dash 1.12s cubic-bezier(0.22, 1, 0.36, 1) infinite;
+}
+
+.winner-avatar--eggman {
+  animation: eggman-hover 1.15s ease-in-out infinite;
+}
+
+.runner-shadow {
+  left: 40%;
+  bottom: 34px;
+  z-index: 2;
+  width: 162px;
+  height: 22px;
+  border-radius: 999px;
+  background: rgba(16, 25, 35, 0.32);
+  filter: blur(2px);
+  animation: shadow-squash 1.12s ease-in-out infinite;
+}
+
+.runner-shadow--eggman {
+  background: rgba(216, 59, 45, 0.32);
+}
+
+.opponent-avatar {
+  right: 15px;
+  bottom: 50px;
+  width: 72px;
+  height: 72px;
+  display: grid;
+  place-items: center;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.5);
+  opacity: 0.74;
+  animation: opponent-spinout 1.4s ease-in-out infinite;
+}
+
+.draw-avatars {
+  left: 50%;
+  bottom: 44px;
+  z-index: 3;
+  width: 218px;
+  height: 126px;
+  transform: translateX(-50%);
+}
+
+.draw-avatar {
+  position: absolute;
+  top: 0;
+  width: 112px;
+  height: 112px;
+  display: grid;
+  place-items: center;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.78);
+  box-shadow: 0 18px 34px rgba(16, 25, 35, 0.26);
+}
+
+.draw-avatar--sonic {
+  left: 0;
+  animation: draw-bump-left 1.1s ease-in-out infinite;
+}
+
+.draw-avatar--eggman {
+  right: 0;
+  animation: draw-bump-right 1.1s ease-in-out infinite;
 }
 
 .result-copy {
   position: relative;
   z-index: 1;
+  align-self: center;
+  padding: 24px 24px 24px 22px;
+}
+
+.result-kicker {
+  display: inline-flex;
+  margin-bottom: 9px;
+  border-radius: 999px;
+  padding: 6px 10px;
+  color: #ffffff;
+  background: var(--blue);
+  font-size: 12px;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0;
+}
+
+.result-animation--eggman .result-kicker {
+  background: var(--red);
+}
+
+.result-animation--draw .result-kicker {
+  background: #626b78;
 }
 
 .result-copy h2 {
   margin: 0;
-  font-size: 30px;
-  line-height: 1.05;
+  font-size: 34px;
+  line-height: 1.02;
 }
 
 .result-copy p {
-  margin: 8px 0 0;
+  margin: 10px 0 0;
   color: #526273;
-  font-weight: 720;
-  line-height: 1.4;
+  font-weight: 760;
+  line-height: 1.42;
 }
 
 .controls {
@@ -398,18 +656,39 @@ h1 {
   .result-animation {
     min-height: 0;
     grid-template-columns: 1fr;
-    justify-items: center;
+  }
+
+  .result-stage {
+    min-height: 226px;
+  }
+
+  .winner-avatar {
+    left: 42%;
+    width: 112px;
+    height: 112px;
+  }
+
+  .opponent-avatar {
+    right: 10px;
+    width: 58px;
+    height: 58px;
+  }
+
+  .finish-line {
+    right: 18px;
+  }
+
+  .result-copy {
+    padding: 18px;
     text-align: center;
   }
 
-  .result-track,
-  .result-token {
-    grid-column: 1;
-    grid-row: 1;
+  .result-kicker {
+    justify-content: center;
   }
 
   .result-copy h2 {
-    font-size: 26px;
+    font-size: 29px;
   }
 
   .controls {
@@ -439,42 +718,136 @@ h1 {
   }
 }
 
-@keyframes ring-pulse {
+@keyframes panel-shine {
+  0%,
+  38% {
+    transform: translateX(-82%);
+  }
+
+  100% {
+    transform: translateX(82%);
+  }
+}
+
+@keyframes ring-race {
   0%,
   100% {
-    transform: scale(0.88);
-    opacity: 0.68;
+    transform: translateY(0) scale(0.88) rotate(0deg);
+    opacity: 0.72;
   }
 
   50% {
-    transform: scale(1.06);
+    transform: translateY(-13px) scale(1.08) rotate(180deg);
     opacity: 1;
   }
 }
 
-@keyframes streak-slide {
+@keyframes spark-burst {
   0% {
-    transform: translateX(-12px);
+    transform: scale(0.4) rotate(0deg);
     opacity: 0;
   }
 
-  38% {
-    opacity: 0.82;
+  45% {
+    transform: scale(1) rotate(32deg);
+    opacity: 1;
   }
 
   100% {
-    transform: translateX(22px);
+    transform: scale(0.4) rotate(80deg);
     opacity: 0;
   }
 }
 
-@keyframes winner-float {
+@keyframes speed-sweep {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(460px);
+  }
+}
+
+@keyframes sonic-victory-dash {
+  0% {
+    transform: translate(-130px, 0) scale(0.82) rotate(-10deg);
+  }
+
+  42% {
+    transform: translate(0, -15px) scale(1.1) rotate(5deg);
+  }
+
+  72% {
+    transform: translate(11px, 0) scale(1) rotate(-3deg);
+  }
+
+  100% {
+    transform: translate(0, -8px) scale(1.04) rotate(3deg);
+  }
+}
+
+@keyframes eggman-hover {
   0%,
   100% {
-    transform: translateY(0) rotate(-2deg);
+    transform: translateY(0) rotate(-4deg) scale(1);
+    box-shadow:
+      0 18px 34px rgba(16, 25, 35, 0.28),
+      0 0 0 0 rgba(216, 59, 45, 0.32),
+      inset 0 0 0 3px rgba(255, 255, 255, 0.92);
   }
 
   50% {
-    transform: translateY(-8px) rotate(2deg);
+    transform: translateY(-15px) rotate(5deg) scale(1.04);
+    box-shadow:
+      0 24px 38px rgba(16, 25, 35, 0.26),
+      0 0 0 12px rgba(216, 59, 45, 0.12),
+      inset 0 0 0 3px rgba(255, 255, 255, 0.92);
+  }
+}
+
+@keyframes shadow-squash {
+  0%,
+  100% {
+    transform: scaleX(0.82);
+    opacity: 0.34;
+  }
+
+  50% {
+    transform: scaleX(1.18);
+    opacity: 0.24;
+  }
+}
+
+@keyframes opponent-spinout {
+  0%,
+  100% {
+    transform: translateY(0) rotate(-9deg);
+  }
+
+  50% {
+    transform: translateY(8px) rotate(10deg);
+  }
+}
+
+@keyframes draw-bump-left {
+  0%,
+  100% {
+    transform: translateX(-8px) rotate(-6deg);
+  }
+
+  50% {
+    transform: translateX(15px) rotate(4deg);
+  }
+}
+
+@keyframes draw-bump-right {
+  0%,
+  100% {
+    transform: translateX(8px) rotate(6deg);
+  }
+
+  50% {
+    transform: translateX(-15px) rotate(-4deg);
   }
 }

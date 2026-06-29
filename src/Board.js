@@ -10,18 +10,24 @@ const PLAYERS = {
     name: 'Sonic',
     image: sonic,
     alt: 'Sonic token',
-    resultTitle: 'Sonic wins!',
-    resultText: 'Sonic blasts through the finish line and owns this round.',
+    resultTitle: 'Sonic victory dash!',
+    resultText: 'Gold rings fly across the track while Sonic takes the round.',
+    resultKicker: 'Finish line crossed',
   },
   eggman: {
     id: 'eggman',
     name: 'Dr. Eggman',
     image: eggman,
     alt: 'Dr. Eggman token',
-    resultTitle: 'Eggman wins!',
-    resultText: 'Dr. Eggman powers up the victory machine.',
+    resultTitle: 'Eggman takeover!',
+    resultText: 'Warning lights flash as Dr. Eggman claims the board.',
+    resultKicker: 'Machine activated',
   },
 };
+
+const CELEBRATION_RINGS = Array.from({ length: 7 }, (_, index) => index);
+const CELEBRATION_SPARKS = Array.from({ length: 12 }, (_, index) => index);
+const SPEED_LINES = Array.from({ length: 6 }, (_, index) => index);
 
 const WINNING_COMBOS = [
   [0, 1, 2],
@@ -153,6 +159,7 @@ class Board extends React.Component {
         tone: winner,
         title: PLAYERS[winner].resultTitle,
         text: PLAYERS[winner].resultText,
+        kicker: PLAYERS[winner].resultKicker,
         playerId: winner,
       };
     }
@@ -161,7 +168,8 @@ class Board extends React.Component {
       return {
         tone: 'draw',
         title: 'Draw round',
-        text: 'The rivalry stalls out. Start a new round for the rematch.',
+        text: 'Both rivals crash through the same finish line. Run it back.',
+        kicker: 'Photo finish',
       };
     }
 
@@ -184,23 +192,47 @@ class Board extends React.Component {
       return null;
     }
 
+    const opponentId =
+      details.playerId && details.playerId === PLAYERS.sonic.id ? PLAYERS.eggman.id : PLAYERS.sonic.id;
+
     return (
       <section
         className={`result-animation result-animation--${details.tone}`}
         aria-live="polite"
         aria-label={details.title}
       >
-        <div className="result-track" aria-hidden="true">
-          <span className="result-ring result-ring--one" />
-          <span className="result-ring result-ring--two" />
-          <span className="result-streak result-streak--one" />
-          <span className="result-streak result-streak--two" />
-          <span className="result-streak result-streak--three" />
-        </div>
-        <div className="result-token" aria-hidden="true">
-          {details.playerId ? this.renderToken(details.playerId) : <span>VS</span>}
+        <div className="result-stage" aria-hidden="true">
+          <div className="result-sky">
+            {CELEBRATION_RINGS.map((ring) => (
+              <span key={`ring-${ring}`} className={`result-ring result-ring--${ring + 1}`} />
+            ))}
+            {CELEBRATION_SPARKS.map((spark) => (
+              <span key={`spark-${spark}`} className={`result-spark result-spark--${spark + 1}`} />
+            ))}
+          </div>
+          <div className="speed-lane">
+            {SPEED_LINES.map((line) => (
+              <span key={`line-${line}`} className={`speed-line speed-line--${line + 1}`} />
+            ))}
+          </div>
+          <span className="finish-line" />
+          {details.playerId ? (
+            <>
+              <div className={`winner-avatar winner-avatar--${details.playerId}`}>
+                {this.renderToken(details.playerId)}
+              </div>
+              <div className={`runner-shadow runner-shadow--${details.playerId}`} />
+              <div className="opponent-avatar">{this.renderToken(opponentId)}</div>
+            </>
+          ) : (
+            <div className="draw-avatars">
+              <div className="draw-avatar draw-avatar--sonic">{this.renderToken(PLAYERS.sonic.id)}</div>
+              <div className="draw-avatar draw-avatar--eggman">{this.renderToken(PLAYERS.eggman.id)}</div>
+            </div>
+          )}
         </div>
         <div className="result-copy">
+          <span className="result-kicker">{details.kicker}</span>
           <h2>{details.title}</h2>
           <p>{details.text}</p>
         </div>
